@@ -1,0 +1,92 @@
+:root {
+    --green: #10b981;
+    --green-dark: #065f46;
+    --bg: #f3f4f6;
+    --dark: #111827;
+    --white: #ffffff;
+    --gray: #6b7280;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    background: var(--bg);
+    font-family: 'Inter', sans-serif;
+    color: var(--dark);
+    line-height: 1.6;
+    padding-bottom: 4rem;
+  }
+  
+  .header {
+    background: var(--green);
+    color: var(--white);
+    text-align: center;
+    padding: 2rem 1rem;
+  }
+  
+  .logo {
+    width: 48px;
+    margin-bottom: 1rem;
+  }
+  
+  .subtitle {
+    color: #e5e7eb;
+    font-size: 1rem;
+  }
+  
+  .section {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+  
+  .card {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: scale(1.02);
+  }
+  
+  .btn-primary {
+    background: var(--green);
+    color: var(--white);
+    padding: 0.75rem 1.5rem;
+    border: none;
+    font-size: 1rem;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    margin-top: 1rem;
+  }
+  
+  .btn-primary:hover {
+    background: var(--green-dark);
+  }
+  
+  .footer {
+    text-align: center;
+    color: var(--gray);
+    padding: 2rem;
+    font-size: 0.9rem;
+  }
+  
+  .footer a {
+    color: var(--green);
+    text-decoration: none;
+  }
+  

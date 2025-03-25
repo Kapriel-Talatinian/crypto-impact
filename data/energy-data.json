@@ -1,0 +1,23 @@
+{
+    "bitcoin": {
+      "kwh_per_txn": 707,
+      "mode": "PoW",
+      "source": "https://digiconomist.net/bitcoin-energy-consumption/"
+    },
+    "ethereum": {
+      "kwh_per_txn": 0.03,
+      "mode": "PoS",
+      "source": "https://ethereum.org/en/energy-consumption/"
+    },
+    "solana": {
+      "kwh_per_txn": 0.0019,
+      "mode": "PoS",
+      "source": "https://solana.com/news/solana-energy-impact-report"
+    },
+    "cardano": {
+      "kwh_per_txn": 0.5479,
+      "mode": "PoS",
+      "source": "https://cardano.org/sustainability/"
+    }
+  }
+  
