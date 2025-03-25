@@ -23,8 +23,3 @@ Une application frontend simple et puissante pour visualiser l'empreinte carbone
 1. Cloner le repo
 2. Ouvrir `index.html` dans votre navigateur
 3. Profitez 🎉
-
-## 🌐 Déploiement
-
-- [ ] GitHub Pages
-- [ ] Netlify Drag & Drop

@@ -1,7 +1,7 @@
 {
-    "name": "Crypto & CO₂ Tracker",
-    "short_name": "CryptoCO2",
-    "start_url": "./index.html",
+    "name": "CryptoImpact",
+    "short_name": "CryptoImpact",
+    "start_url": "index.html",
     "display": "standalone",
     "background_color": "#10b981",
     "theme_color": "#10b981",

@@ -18,6 +18,36 @@
       "kwh_per_txn": 0.5479,
       "mode": "PoS",
       "source": "https://cardano.org/sustainability/"
+    },
+    "dogecoin": {
+      "kwh_per_txn": 0.118,
+      "mode": "PoW",
+      "source": "https://digiconomist.net/dogecoin-energy-consumption/"
+    },
+    "litecoin": {
+      "kwh_per_txn": 19,
+      "mode": "PoW",
+      "source": "https://digiconomist.net/litecoin-energy-consumption/"
+    },
+    "ripple": {
+      "kwh_per_txn": 0.000011,
+      "mode": "Consensus",
+      "source": "https://ripple.com/insights/ripple-energy-efficiency/"
+    },
+    "polkadot": {
+      "kwh_per_txn": 0.003,
+      "mode": "PoS",
+      "source": "https://research.web3.foundation/en/latest/polkadot/polkadot-energy-efficiency/"
+    },
+    "tron": {
+      "kwh_per_txn": 0.0006,
+      "mode": "DPoS",
+      "source": "https://blog.tron.network/tron-energy-usage"
+    },
+    "avalanche-2": {
+      "kwh_per_txn": 0.0028,
+      "mode": "PoS",
+      "source": "https://www.avax.network/news/avalanche-energy-report"
     }
   }
   

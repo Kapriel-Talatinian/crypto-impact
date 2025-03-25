@@ -5,134 +5,80 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Crypto Impact 🌿</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="./style.css" />
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <link rel="manifest" href="manifest.json" />
+
 </head>
+<script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(() => console.log('✅ Service worker enregistré'))
+        .catch(err => console.error('❌ SW erreur :', err));
+    }
+  </script>
+  
 <body>
-  <header class="header" data-aos="fade-down">
-    <img src="assets/logo.svg" class="logo" alt="Logo Crypto" />
-    <h1>CryptoImpact 🌿</h1>
-    <p class="subtitle">Suivez l’empreinte carbone de vos cryptos</p>
+
+  <header class="navbar" data-aos="fade-down">
+    <div class="navbar-container">
+      <div class="brand">
+        <img src="assets/logo.svg" class="logo" alt="Logo Crypto" />
+        <span class="brand-name">CryptoImpact 🌿</span>
+      </div>
+      <nav class="nav-links" id="navbar-links">
+        <a href="#home">Accueil</a>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#wallet">Mon Wallet</a>
+        <a href="#infos">À propos</a>
+        <a href="https://github.com/Kapriel-Talatinian/crypto-impact" target="_blank">GitHub</a>
+        <button onclick="connectWallet()" class="btn-connect">🔌 Connect Wallet</button>
+        <button onclick="toggleDarkMode()" class="btn-dark">🌓</button>
+      </nav>
+      <button class="burger" id="burger" aria-label="Toggle navigation">
+        ☰
+      </button>
+      
+    </div>
   </header>
 
-  <main>
-    <section class="dashboard section" data-aos="fade-up">
+  <main id="home">
+    <section class="hero section" data-aos="fade-up">
+      <h1>Bienvenue sur CryptoImpact 🌿</h1>
+      <p class="subtitle">Suivez l’empreinte carbone de vos cryptos, en temps réel.</p>
+    </section>
+
+    <section id="dashboard" class="dashboard section" data-aos="fade-up">
       <h2>🌐 Aperçu global</h2>
       <div id="crypto-grid" class="grid"></div>
     </section>
 
-    <section class="wallet section" data-aos="fade-up">
+    <section id="wallet" class="wallet section" data-aos="fade-up">
       <h2>💼 Empreinte de mon Wallet</h2>
-      <button onclick="connectWallet()" class="btn-primary">🔌 Connecter MetaMask</button>
       <div id="wallet-output"></div>
       <canvas id="walletChart" width="400" height="200"></canvas>
     </section>
 
-    <section class="infos section" data-aos="fade-up">
+    <section id="infos" class="infos section" data-aos="fade-up">
       <h2>📚 Comprendre l’impact</h2>
       <p>Les blockchains consomment de l'énergie selon leur mécanisme de consensus (PoW vs PoS). Les estimations ici sont basées sur la consommation moyenne par transaction multipliée par une intensité carbone standard (~0.475 kg/kWh).</p>
     </section>
   </main>
 
   <footer class="footer" data-aos="fade-up">
-    <p>© 2025 CryptoImpact | <a href="https://github.com/tonrepo" target="_blank">GitHub</a></p>
+    <div class="footer-container">
+      <p>© 2025 CryptoImpact</p>
+      <div class="footer-links">
+        <a href="#home">Accueil</a>
+        <a href="#infos">À propos</a>
+        <a href="mailto:contact@cryptoimpact.com">Contact</a>
+        <a href="https://github.com/Kapriel-Talatinian/crypto-impact" target="_blank">GitHub</a>
+      </div>
+    </div>
   </footer>
 
-  <script>
-    AOS.init();
-
-    document.addEventListener("DOMContentLoaded", async () => {
-      const cryptoGrid = document.getElementById("crypto-grid");
-      const energyData = await fetch("data/energy-data.json").then(r => r.json());
-
-      const cryptos = await fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd")
-        .then(res => res.json())
-        .then(data => data.filter(coin => energyData[coin.id]));
-
-      cryptos.forEach(coin => {
-        const info = energyData[coin.id];
-        const kwh = info.kwh_per_txn;
-        const co2 = (kwh * 0.475).toFixed(2);
-
-        const card = document.createElement("div");
-        card.className = "card";
-        card.innerHTML = `
-          <h3>${coin.name} (${coin.symbol.toUpperCase()})</h3>
-          <p>Prix : $${coin.current_price.toLocaleString()}</p>
-          <p>Mode : ${info.mode} <small>(Source: <a href="${info.source}" target="_blank">données</a>)</small></p>
-          <p>Conso/txn : ${kwh} kWh</p>
-          <p>Empreinte CO₂ : <strong>${co2} kg</strong></p>
-        `;
-        cryptoGrid.appendChild(card);
-      });
-    });
-
-    async function connectWallet() {
-      if (!window.ethereum) return alert("MetaMask est requis.");
-
-      const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-      const address = accounts[0];
-      document.getElementById("wallet-output").innerHTML = `<p>Connecté : ${address}</p>`;
-
-      const res = await fetch(`https://api.covalenthq.com/v1/1/address/${address}/balances_v2/?key=ckey_docs`);
-      const json = await res.json();
-      const tokens = json.data.items;
-      const energyData = await fetch("data/energy-data.json").then(r => r.json());
-
-      let totalCO2 = 0;
-      let html = '<div class="grid">';
-      const labels = [];
-      const values = [];
-
-      tokens.forEach(token => {
-        const id = token.contract_ticker_symbol.toLowerCase();
-        const match = Object.entries(energyData).find(([key]) => key.includes(id));
-        if (match) {
-          const [name, data] = match;
-          const kwh = data.kwh_per_txn;
-          const co2 = (kwh * 0.475).toFixed(3);
-          totalCO2 += parseFloat(co2);
-
-          labels.push(token.contract_ticker_symbol);
-          values.push(parseFloat(co2));
-
-          html += `
-            <div class="card">
-              <p><strong>${token.contract_name} (${token.contract_ticker_symbol})</strong></p>
-              <p>Quantité : ${(token.balance / 10 ** token.contract_decimals).toFixed(4)}</p>
-              <p>Mode : ${data.mode}</p>
-              <p>Conso estimée : ${kwh} kWh</p>
-              <p>Empreinte CO₂ : ${co2} kg</p>
-              <p><a href="${data.source}" target="_blank">Source</a></p>
-            </div>`;
-        }
-      });
-
-      html += '</div>';
-      html += `<h3>Total estimé : <strong>${totalCO2.toFixed(2)} kg CO₂</strong></h3>`;
-      document.getElementById("wallet-output").innerHTML += html;
-
-      const ctx = document.getElementById('walletChart').getContext('2d');
-      new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: labels,
-          datasets: [{
-            data: values,
-            backgroundColor: ['#10b981', '#6ee7b7', '#065f46', '#34d399', '#059669']
-          }]
-        },
-        options: {
-          plugins: {
-            legend: {
-              position: 'bottom'
-            }
-          }
-        }
-      });
-    }
-  </script>
+  <script src="./script.js"></script>
 </body>
 </html>
